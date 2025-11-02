@@ -8,6 +8,7 @@ const router = express.Router();
 const db = require('./db'); // Import MySQL connection file
 const path = require('path');
 
+
 // Middleware
 app.use(bodyParser.json());
 app.use(express.static('public'));
@@ -18,8 +19,12 @@ app.use("/auth", require('./routes/fauth'));
 app.use("/authlab", require('./routes/labauth'));
 app.use("/authmanu", require('./routes/manuauth'));
 
+const farmer_request = require('./routes/farmer_request');
+
 app.use(express.static('frontend'));
 app.use(express.json());
+
+app.use('/farmer',farmer_request);
 // ✅ Test Database Connection at startup
 (async () => {
   try {

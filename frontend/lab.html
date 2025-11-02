@@ -187,7 +187,7 @@ loginForm.addEventListener('submit', async (e) => {
     localStorage.setItem('labToken', data.token);
     alert("Login successful!");
     // redirect to dashboard
-    window.location.href = "http://localhost:4000/farmers-pending-requst.html";
+    window.location.href = "http://localhost:4000/farmer-pending-request.html";
   } else {
     alert(data.message || "Login failed");
     console.log("failed in login");
