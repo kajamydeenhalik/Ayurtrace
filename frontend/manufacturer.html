@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><title>Manufacturer</title></head>
+<body>
+  <h2>Manufacturer Data Entry</h2>
+  <form id="manForm">
+    <input type="text" placeholder="Manufacturer Name" id="manufacturer_name"><br>
+    <input type="number" placeholder="Product ID" id="product_id"><br>
+    <input type="text" placeholder="Batch ID" id="batch_id"><br>
+    <input type="text" placeholder="Process Details" id="process_details"><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('manForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const data = {
+        manufacturer_name: manufacturer_name.value,
+        product_id: product_id.value,
+        batch_id: batch_id.value,
+        process_details: process_details.value
+      };
+      const res = await fetch('/api/manufacturer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      alert('Manufacturer data recorded!');
+    };
+  </script>
+</body>
+</html>

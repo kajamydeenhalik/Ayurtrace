@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><title>Lab Reporter</title></head>
+<body>
+  <h2>Lab Data Entry</h2>
+  <form id="labForm">
+    <input type="text" placeholder="Lab Name" id="lab_name"><br>
+    <input type="number" placeholder="Product ID" id="product_id"><br>
+    <input type="text" placeholder="Test Result" id="test_result"><br>
+    <input type="text" placeholder="Grade" id="grade"><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('labForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const data = {
+        lab_name: lab_name.value,
+        product_id: product_id.value,
+        test_result: test_result.value,
+        grade: grade.value
+      };
+      const res = await fetch('/api/lab', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      alert('Lab data recorded!');
+    };
+  </script>
+</body>
+</html>

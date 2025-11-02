@@ -1,0 +1,184 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f0f9f4;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #6ac17b, #37966f);
+  color: white;
+  padding: 1.5rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header .logo img {
+  height: 50px;
+  border-radius: 10px;
+}
+
+header nav a {
+  color: white;
+  margin-left: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+header nav a:hover,
+header nav a.active {
+  color: #ffe066;
+}
+
+/* Hero Section */
+.hero-slider {
+  width: 100%;
+  max-height: 420px;
+  overflow: hidden;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.hero-slider img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+}
+
+/* About Section */
+.about-section {
+  max-width: 1000px;
+  margin: 3rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.about-image {
+  flex: 1 1 320px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-content {
+  flex: 2 1 500px;
+}
+
+.about-content h2 {
+  color: #2e8b57;
+  margin-bottom: 1rem;
+}
+
+.about-content p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Container for all roles */
+.role-section {
+  width: 95%;          /* almost full width */
+  max-width: 1400px;   /* optional max width for large screens */
+  margin: 2rem auto;
+  display: flex;
+  flex-wrap: wrap;     /* wrap to next line if screen is small */
+  gap: 20px;           /* space between blocks */
+  justify-content: center;
+}
+
+/* Each role block */
+.role-block {
+  flex: 1 1 45%;       /* grow to 45% of row, wrap if needed */
+  display: flex;
+  background: #f0fff0;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  min-width: 300px;    /* prevents being too narrow */
+}
+
+.role-block:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+}
+
+/* Image inside the role block */
+.role-image {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+  overflow: hidden;
+}
+
+.role-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content inside the role block */
+.role-content {
+  flex: 2;
+  padding: 20px;
+  text-align: left;
+}
+
+.role-content h3 {
+  margin-bottom: 10px;
+  color: #1b4332;
+}
+
+.role-content ul {
+  margin-left: 20px;
+}
+
+.role-content p {
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .role-block {
+    flex-direction: column;
+  }
+  .role-image {
+    max-width: 100%;
+    min-height: 200px;
+  }
+}

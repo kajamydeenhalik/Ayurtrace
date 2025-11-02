@@ -1,0 +1,302 @@
+/* Base Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: #f4f9f4;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  color: #333;
+  scroll-behavior: smooth;
+}
+
+header {
+  background: linear-gradient(90deg, #2d6a4f, #95d5b2);
+  color: white;
+  padding: 10px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header .logo img {
+  height: 50px;
+}
+
+header nav a {
+  color: white;
+  margin-left: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+header nav a:hover,
+header nav a.active{
+  color: #ffe066; /* highlight on hover */
+}
+
+.about-section {
+  max-width: 900px;
+  margin: 3rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.about-image {
+  flex: 1 1 300px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-content {
+  flex: 2 1 500px;
+}
+
+.about-content h2 {
+  color: #1b4332;
+  margin-bottom: 1rem;
+}
+
+.about-content p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+
+/* Hero Slider */
+.hero-slider {
+  width: 100%;
+  max-height: 450px;
+  overflow: hidden;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.hero-slider img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+}
+
+/* Main Content */
+main {
+  flex: 1;
+  padding: 2rem;
+  text-align: center;
+}
+
+h2 {
+  color: #1b4332;
+  margin-bottom: 2rem;
+}
+
+/* Role Cards */
+.role-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.card .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(45,106,79,0.8), rgba(0,0,0,0.0));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+}
+
+.card:hover img {
+  transform: scale(1.1);
+  filter: brightness(0.8);
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.card-text {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  padding: 12px 0;
+  font-weight: 600;
+  font-size: 1rem;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+}
+
+/* Contact Section */
+.contact-section {
+  max-width: 900px;
+  margin: 3rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.contact-image {
+  flex: 1 1 300px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.contact-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-form {
+  flex: 2 1 400px;
+}
+
+.contact-form h2 {
+  color: #1b4332;
+  margin-bottom: 1rem;
+}
+
+.contact-form label {
+  display: block;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #2d6a4f;
+  box-shadow: 0 0 5px rgba(45,106,79,0.5);
+}
+
+.contact-form button {
+  background: linear-gradient(135deg, #2d6a4f, #95d5b2);
+  color: white;
+  border: none;
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 25px;
+}
+
+.contact-form button:hover {
+  background: linear-gradient(135deg, #95d5b2, #2d6a4f);
+  transform: scale(1.05);
+}
+
+
+/* Footer */
+footer {
+  background: #2d6a4f;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+  font-weight: 500;
+}
+
+/* Gradient Buttons (for future use) */
+.button-gradient {
+  background: linear-gradient(135deg, #2d6a4f, #95d5b2);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.button-gradient:hover {
+  background: linear-gradient(135deg, #95d5b2, #2d6a4f);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    width: 160px;
+    height: 160px;
+  }
+
+  .hero-slider img {
+    height: 250px;
+  }
+
+  header nav a {
+    margin: 0 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header nav a {
+    margin-left: 15px;
+  }
+}

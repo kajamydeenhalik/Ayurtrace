@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><title>Farmer</title></head>
+<body>
+  <h2>Farmer Data Entry</h2>
+  <form id="farmerForm">
+    <input type="text" placeholder="Farmer Name" id="farmer_name"><br>
+    <input type="text" placeholder="Product Name" id="product_name"><br>
+    <input type="number" placeholder="Quantity" id="quantity"><br>
+    <input type="date" id="harvest_date"><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById('farmerForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const data = {
+        farmer_name: farmer_name.value,
+        product_name: product_name.value,
+        quantity: quantity.value,
+        harvest_date: harvest_date.value
+      };
+      const res = await fetch('/api/farmer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      alert('Farmer data recorded!');
+    };
+  </script>
+</body>
+</html>
