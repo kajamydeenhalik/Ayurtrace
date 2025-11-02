@@ -1,32 +1,241 @@
 <!DOCTYPE html>
-<html>
-<head><title>Manufacturer</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manufacturer | AyurTrace</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/manufacturer.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+</head>
 <body>
-  <h2>Manufacturer Data Entry</h2>
-  <form id="manForm">
-    <input type="text" placeholder="Manufacturer Name" id="manufacturer_name"><br>
-    <input type="number" placeholder="Product ID" id="product_id"><br>
-    <input type="text" placeholder="Batch ID" id="batch_id"><br>
-    <input type="text" placeholder="Process Details" id="process_details"><br>
-    <button type="submit">Submit</button>
-  </form>
 
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="../images/logo.jpg" alt="AyurTrace Logo" />
+        <h1>AyurTrace</h1>
+      </div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contactus" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main data-aos="fade-up" style="text-align:center;">
+    <h2 class="portal-title">Manufacturer Portal</h2>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="form-card active" data-aos="fade-up" style="text-align:center;">
+      <div>
+        <label for="loginEmail">Email</label><br>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <div>
+        <label for="loginPassword">Password</label><br>
+        <input type="password" id="loginPassword" placeholder="Enter password" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <button type="submit" style="width:85%; padding:10px; border:none; border-radius:25px; background:linear-gradient(to right,#356e56,#85c79c); color:white; font-weight:bold;">Login</button>
+
+      <p style="margin-top:10px;">Don't have an account? <span id="showSignup" style="color:blue; cursor:pointer;">Sign Up</span></p>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="signupForm" class="form-card" data-aos="fade-up" style="text-align:center; display:none;">
+      <div>
+        <label for="signupEmail">Email</label><br>
+        <input type="email" id="signupEmail" placeholder="Enter your email" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <div>
+        <label for="signupPassword">Create Password</label><br>
+        <input type="password" id="signupPassword" placeholder="Create password" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <div>
+        <label for="signupConfirmPassword">Confirm Password</label><br>
+        <input type="password" id="signupConfirmPassword" placeholder="Confirm password" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <button type="submit" style="width:85%; padding:10px; border:none; border-radius:25px; background:linear-gradient(to right,#356e56,#85c79c); color:white; font-weight:bold;">Sign Up</button>
+
+      <p style="margin-top:10px;">Already have an account? <span id="showLogin" style="color:blue; cursor:pointer;">Login</span></p>
+    </form>
+
+    <!-- Manufacturer Data Entry -->
+    <!-- <form id="manufacturerForm" class="form-card" data-aos="fade-up" style="text-align:center; display:none;">
+      <div>
+        <label for="manufacturerName">Manufacturer Name</label><br>
+        <input type="text" id="manufacturerName" placeholder="Enter name" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <div>
+        <label for="batchID">Processing Batch ID</label><br>
+        <input type="text" id="batchID" placeholder="Enter processing batch ID" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <div>
+        <label for="manufactureDate">Manufacture Date</label><br>
+        <input type="date" id="manufactureDate" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <div>
+        <label for="expiryDate">Expiry Date</label><br>
+        <input type="date" id="expiryDate" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <button type="submit" style="width:85%; padding:10px; border:none; border-radius:25px; background:linear-gradient(to right,#356e56,#85c79c); color:white; font-weight:bold;">Submit Manufacturing Data</button>
+    </form> -->
+
+    <!-- QR Code Generator -->
+    <!-- <div id="qrForm" class="form-card" data-aos="fade-up" style="text-align:center; display:none;">
+      <div>
+        <label for="qrBatchID">Enter Batch ID to Generate QR Code</label><br>
+        <input type="text" id="qrBatchID" placeholder="Enter Batch ID" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <button id="generateQRBtn" style="width:85%; padding:10px; border:none; border-radius:25px; background:linear-gradient(to right,#356e56,#85c79c); color:white; font-weight:bold;">Generate QR Code</button>
+
+      <div id="qrCode" style="margin-top:20px;"></div>
+      <button id="downloadQRBtn" style="margin-top:10px; display:none; width:85%; padding:10px; border:none; border-radius:25px; background:linear-gradient(to right,#356e56,#85c79c); color:white; font-weight:bold;">Download QR Code</button>
+    </div>
+  </main> -->
+
+  <!-- Footer -->
+  <footer data-aos="fade-up" style="text-align:center; margin-top:20px;">
+    © 2025 AyurTrace | Manufacturer Data Entry
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-    document.getElementById('manForm').onsubmit = async (e) => {
-      e.preventDefault();
-      const data = {
-        manufacturer_name: manufacturer_name.value,
-        product_id: product_id.value,
-        batch_id: batch_id.value,
-        process_details: process_details.value
-      };
-      const res = await fetch('/api/manufacturer', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      alert('Manufacturer data recorded!');
-    };
+    AOS.init({ duration: 1000, once: true });
+
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+    const manufacturerForm = document.getElementById("manufacturerForm");
+    const qrForm = document.getElementById("qrForm");
+    const showSignup = document.getElementById("showSignup");
+    const showLogin = document.getElementById("showLogin");
+    const generateQRBtn = document.getElementById("generateQRBtn");
+    const downloadQRBtn = document.getElementById("downloadQRBtn");
+    const qrCodeDiv = document.getElementById("qrCode");
+
+    // Switch between Login and Sign Up
+    showSignup.addEventListener("click", () => {
+      loginForm.style.display = "none";
+      signupForm.style.display = "block";
+    });
+
+    showLogin.addEventListener("click", () => {
+      signupForm.style.display = "none";
+      loginForm.style.display = "block";
+    });
+
+  //manufacturer signup
+
+ signupForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("signupEmail").value;
+  const password = document.getElementById("signupPassword").value;
+  const confirm = document.getElementById('signupConfirmPassword').value;
+
+      if (password !== confirm) {
+        alert('Passwords do not match.');
+        return;
+      }
+
+  const res = await fetch("http://localhost:4000/authmanu/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+});
+
+// 🔐  manufacturer login
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  const res = await fetch("http://localhost:4000/authmanu/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password, role: "manufacturer" })
+  });
+
+  const data = await res.json();
+  
+  if (res.ok) {
+    // Save token for future authenticated requests
+    localStorage.setItem('labToken', data.token);
+    alert("Login successful!");
+    // redirect to dashboard
+    window.location.href = "http://localhost:4000/final-manu.html";
+  } else {
+    alert(data.message || "Login failed");
+    console.log("failed in login");
+  }
+});
+
+    // Manufacturer data form
+    // manufacturerForm.addEventListener("submit", (e) => {
+    //   e.preventDefault();
+    //   const manufacturerName = document.getElementById("manufacturerName").value.trim();
+    //   const batchID = document.getElementById("batchID").value.trim();
+    //   const manufactureDate = document.getElementById("manufactureDate").value;
+    //   const expiryDate = document.getElementById("expiryDate").value;
+
+    //   if (!manufacturerName || !batchID || !manufactureDate || !expiryDate) {
+    //     alert("Please fill all fields.");
+    //     return;
+    //   }
+
+    //   alert("Manufacturing data submitted successfully!");
+    //   manufacturerForm.style.display = "none";
+    //   qrForm.style.display = "block";
+    //   document.getElementById("qrBatchID").value = batchID;
+    // });
+
+    // // Generate QR Code
+    // generateQRBtn.addEventListener("click", (e) => {
+    //   e.preventDefault();
+    //   const batchID = document.getElementById("qrBatchID").value.trim();
+    //   if (!batchID) {
+    //     alert("Please enter a Batch ID.");
+    //     return;
+    //   }
+
+    //   qrCodeDiv.innerHTML = "";
+    //   downloadQRBtn.style.display = "none";
+
+    //   QRCode.toCanvas(batchID, { width: 200 }, (error, canvas) => {
+    //     if (error) {
+    //       alert("Failed to generate QR code.");
+    //       return;
+    //     }
+    //     qrCodeDiv.appendChild(canvas);
+    //     downloadQRBtn.style.display = "inline-block";
+
+    //     downloadQRBtn.onclick = () => {
+    //       const link = document.createElement("a");
+    //       link.href = canvas.toDataURL("image/png");
+    //       link.download = `Batch_${batchID}_QR.png`;
+    //       link.click();
+    //     };
+    //   });
+    // });
   </script>
 </body>
 </html>

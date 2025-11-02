@@ -1,32 +1,213 @@
 <!DOCTYPE html>
-<html>
-<head><title>Lab Reporter</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analyticore Portal | AyurTrace</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/processor.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+</head>
 <body>
-  <h2>Lab Data Entry</h2>
-  <form id="labForm">
-    <input type="text" placeholder="Lab Name" id="lab_name"><br>
-    <input type="number" placeholder="Product ID" id="product_id"><br>
-    <input type="text" placeholder="Test Result" id="test_result"><br>
-    <input type="text" placeholder="Grade" id="grade"><br>
-    <button type="submit">Submit</button>
-  </form>
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="../images/logo.jpg" alt="AyurTrace Logo" />
+        <h1>AyurTrace</h1>
+      </div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contactus" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
 
+  <!-- Main -->
+  <main data-aos="fade-up">
+    <h2 class="portal-title">Analyticore Portal</h2>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" id="loginTab">Analyticore Login</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="form-card active" data-aos="fade-up" style="text-align:center;">
+      <div>
+        <label for="loginEmail">Email</label><br>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <div>
+        <label for="loginPassword">Password</label><br>
+        <input type="password" id="loginPassword" placeholder="Enter password" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <button type="submit" style="width:85%; padding:10px; border:none; border-radius:25px; background:linear-gradient(to right, #356e56, #85c79c); color:white; font-weight:bold;">Login</button>
+
+      <p style="margin-top:10px;">Don't have an account? 
+        <span id="showSignup" style="color:blue; cursor:pointer;">Sign Up</span>
+      </p>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="signupForm" class="form-card" data-aos="fade-up" style="text-align:center; display:none;">
+      <div>
+        <label for="signupEmail">Email</label><br>
+        <input type="email" id="signupEmail" placeholder="Enter your email" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <div>
+        <label for="signupPassword">Create Password</label><br>
+        <input type="password" id="signupPassword" placeholder="Create password" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <div>
+        <label for="signupConfirmPassword">Confirm Password</label><br>
+        <input type="password" id="signupConfirmPassword" placeholder="Confirm password" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <button type="submit" style="width:85%; padding:10px; border:none; border-radius:25px; background:linear-gradient(to right, #356e56, #85c79c); color:white; font-weight:bold;">Sign Up</button>
+
+      <p style="margin-top:10px;">Already have an account? 
+        <span id="showLogin" style="color:blue; cursor:pointer;">Login</span>
+      </p>
+    </form>
+
+    <!-- Upload Form -->
+    <!-- <form id="uploadForm" class="form-card" data-aos="fade-up" style="text-align:center; display:none;">
+      <div>
+        <label for="processorIdUpload">Processor ID</label><br>
+        <input type="text" id="processorIdUpload" placeholder="Enter Processor ID" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <div>
+        <label for="farmerId">Farmer ID</label><br>
+        <select id="farmerId" required style="width:83%; padding:10px; margin:10px 0;">
+          <option value="">Select Farmer ID</option>
+          <option value="FARM001">FARM001</option>
+          <option value="FARM002">FARM002</option>
+          <option value="FARM003">FARM003</option>
+          <option value="FARM004">FARM004</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="batchId">Batch ID</label><br>
+        <select id="batchId" required style="width:83%; padding:10px; margin:10px 0;">
+          <option value="">Select Batch ID</option>
+          <option value="BATCH101">BATCH101</option>
+          <option value="BATCH102">BATCH102</option>
+          <option value="BATCH103">BATCH103</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="labReport">Upload Lab Test Report</label><br>
+        <input type="file" id="labReport" accept="application/pdf,image/*" required style="width:80%; padding:10px; margin:10px 0;">
+      </div>
+
+      <button type="submit" style="width:85%; padding:10px; border:none; border-radius:25px; background:linear-gradient(to right, #356e56, #85c79c); color:white; font-weight:bold;">Submit</button>
+    </form> -->
+  </main>
+
+  <!-- Footer -->
+  <footer data-aos="fade-up" style="text-align:center; margin-top:20px;">
+    © 2025 AyurTrace | Processor Portal
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-    document.getElementById('labForm').onsubmit = async (e) => {
-      e.preventDefault();
-      const data = {
-        lab_name: lab_name.value,
-        product_id: product_id.value,
-        test_result: test_result.value,
-        grade: grade.value
-      };
-      const res = await fetch('/api/lab', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      alert('Lab data recorded!');
-    };
+    AOS.init({ duration: 1000, once: true });
+
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const uploadForm = document.getElementById('uploadForm');
+    const showSignup = document.getElementById('showSignup');
+    const showLogin = document.getElementById('showLogin');
+
+    // Switch between forms
+    showSignup.addEventListener('click', () => {
+      loginForm.style.display = 'none';
+      signupForm.style.display = 'block';
+    });
+
+    showLogin.addEventListener('click', () => {
+      signupForm.style.display = 'none';
+      loginForm.style.display = 'block';
+    });
+
+
+
+// 📝 analyticore Signup
+  
+
+
+ signupForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("signupEmail").value;
+  const password = document.getElementById("signupPassword").value;
+  const confirm = document.getElementById('signupConfirmPassword').value;
+
+      if (password !== confirm) {
+        alert('Passwords do not match.');
+        return;
+      }
+
+  const res = await fetch("http://localhost:4000/authlab/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+});
+
+// 🔐  analyticore login
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  const res = await fetch("http://localhost:4000/authlab/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password, role: "analyticore" })
+  });
+
+  const data = await res.json();
+  
+  if (res.ok) {
+    // Save token for future authenticated requests
+    localStorage.setItem('labToken', data.token);
+    alert("Login successful!");
+    // redirect to dashboard
+    window.location.href = "http://localhost:4000/farmers-pending-requst.html";
+  } else {
+    alert(data.message || "Login failed");
+    console.log("failed in login");
+  }
+});
+
+    // Upload
+    // uploadForm.addEventListener('submit', (e) => {
+    //   e.preventDefault();
+    //   const processorId = document.getElementById('processorIdUpload').value.trim();
+    //   const farmerId = document.getElementById('farmerId').value;
+    //   const batchId = document.getElementById('batchId').value;
+    //   const labReport = document.getElementById('labReport').files[0];
+    //   if (!processorId || !farmerId || !batchId || !labReport) {
+    //     alert('Please fill all fields.');
+    //     return;
+    //   }
+    //   alert('Processing info submitted successfully!');
+    //   uploadForm.reset();
+    // });
   </script>
 </body>
 </html>

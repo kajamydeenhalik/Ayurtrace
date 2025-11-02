@@ -1,20 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql2/promise');
 const Blockchain = require('../blockchain/blockchain');
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const blockchain = new Blockchain();
+const db = require('./common_db');
 
 
 // MySQL connection
-const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'Kaja@123',
-  database: 'blockchain_project'
-});
+
 
 
 // 1️⃣ Farmer → Lab (correct farmer route)

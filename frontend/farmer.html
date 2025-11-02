@@ -1,32 +1,154 @@
 <!DOCTYPE html>
-<html>
-<head><title>Farmer</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmer | AyurTrace</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/farmer.css" />
+  <!-- AOS CSS for scroll animations -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+</head>
 <body>
-  <h2>Farmer Data Entry</h2>
-  <form id="farmerForm">
-    <input type="text" placeholder="Farmer Name" id="farmer_name"><br>
-    <input type="text" placeholder="Product Name" id="product_name"><br>
-    <input type="number" placeholder="Quantity" id="quantity"><br>
-    <input type="date" id="harvest_date"><br>
-    <button type="submit">Submit</button>
-  </form>
 
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="../images/logo.jpg" alt="AyurTrace Logo" />
+        <h1>AyurTrace</h1>
+      </div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contactus" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main data-aos="fade-up">
+    <h2 class="portal-title">Farmer Portal</h2>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="form-card active" data-aos="fade-up">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="Enter your email" required />
+
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter password" required />
+
+      <button type="submit">Login</button>
+      <p style="margin-top:10px;">Don't have an account? 
+        
+         <span id="showSignup" style="color:blue; cursor:pointer;">Sign Up</span>
+      </p>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="signupForm" class="form-card" data-aos="fade-up">
+      <label>Email</label>
+      <input type="email" id="signupEmail" placeholder="Enter your email" required />
+
+      <label>Create Password</label>
+      <input type="password" id="signupPassword" placeholder="Create password" required />
+
+      <label>Confirm Password</label>
+      <input type="password" id="signupConfirmPassword" placeholder="Confirm password" required />
+
+      <button type="submit">Sign Up</button>
+      <p style="margin-top:10px;">Already have an account? 
+        <span id="showLogin" style="color:blue; cursor:pointer;">Login</span>
+      </p>
+    </form>
+
+  </main>
+
+  <!-- Footer -->
+  <footer data-aos="fade-up">
+    © 2025 AyurTrace | Farmer Portal
+  </footer>
+
+  <!-- AOS JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-    document.getElementById('farmerForm').onsubmit = async (e) => {
-      e.preventDefault();
-      const data = {
-        farmer_name: farmer_name.value,
-        product_name: product_name.value,
-        quantity: quantity.value,
-        harvest_date: harvest_date.value
-      };
-      const res = await fetch('/api/farmer', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      alert('Farmer data recorded!');
-    };
-  </script>
+  AOS.init({ duration: 1000, once: true });
+
+  // Select the forms
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+
+  // Select the text links
+  const showSignup = document.getElementById('showSignup');
+  const showLogin = document.getElementById('showLogin');
+
+  // When user clicks "Sign Up"
+  showSignup.addEventListener('click', () => {
+    loginForm.classList.remove('active');
+    signupForm.classList.add('active');
+  });
+
+
+  // When user clicks "Login"
+  showLogin.addEventListener('click', () => {
+    signupForm.classList.remove('active');
+    loginForm.classList.add('active');
+  });
+
+
+
+const BASE_URL = "http://localhost:4000";
+
+// 📝 Farmer Signup
+signupForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('signupEmail').value;
+  const password = document.getElementById('signupPassword').value;
+
+  const res = await fetch(`${BASE_URL}/auth/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({email, password, role: "farmer" })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+});
+
+// 🔐 Farmer Login
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  const res = await fetch(`${BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password, role: "farmer" })
+  });
+
+  const data = await res.json();
+  
+  if (res.ok) {
+    // Save token for future authenticated requests
+    localStorage.setItem('farmerToken', data.token);
+    alert("Login successful!");
+    // redirect to dashboard
+    window.location.href = "http://localhost:4000/farmer-dashboard.html";
+  } else {
+    alert(data.message || "Login failed");
+  }
+});
+
+
+
+
+
+
+
+</script>
+
 </body>
 </html>
