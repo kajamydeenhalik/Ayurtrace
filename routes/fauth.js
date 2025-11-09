@@ -4,12 +4,17 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('./common_db');
+const path = require("path");
 
 
 const JWT_SECRET = "mysecuretokenkey"; // put in .env in real project
 
+router.get('/auth',(req,res)=>{
+   res.sendFile(path.join(__dirname,'..', 'frontend','farmer.html'));
+})
+
 // 📝 Signup
-router.post("/signup", async (req, res) => {
+router.post("/auth/signup", async (req, res) => {
   const { name, email, password, role } = req.body;
   try {
     const [existing] = await db.query("SELECT * FROM users WHERE email=?", [email]);
@@ -29,7 +34,7 @@ router.post("/signup", async (req, res) => {
 });
 
 // 🔐 Login
-router.post("/login", async (req, res) => {
+router.post("/auth/login", async (req, res) => {
   const { email, password, role } = req.body;
   try {
     const [rows] = await db.query("SELECT * FROM users WHERE email=? AND role=?", [email, role]);

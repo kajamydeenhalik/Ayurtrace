@@ -3,156 +3,257 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pending Farmer Requests | AyurTrace</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <title>Farmers Pending Verification | AyurTrace</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Leaflet (for map) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <style>
-    body { font-family: Poppins, sans-serif; margin: 20px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
-    th { background: #2b6e4f; color: white; }
-    button { padding: 8px 16px; border: none; border-radius: 5px; background: #2b6e4f; color: white; cursor: pointer; }
-    #verifyForm { margin-top: 20px; padding: 20px; border: 2px solid #2b6e4f; border-radius: 10px; display: none; }
-    label { font-weight: bold; display: block; margin-top: 10px; }
-    input, select, textarea { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; }
-    #map { height: 300px; margin-top: 10px; border-radius: 10px; }
+    body {
+      background-color: #f8f9fa;
+      font-family: "Poppins", sans-serif;
+    }
+    h2 {
+      text-align: center;
+      margin-top: 20px;
+      color: #2b7a4b;
+    }
+    .verify-btn {
+      background: linear-gradient(to right, #3a7d44, #6fcf97);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+    .verify-btn:hover { opacity: 0.9; }
+
+    #map {
+      height: 250px;
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <h2>🌾 Pending Farmer Requests</h2>
-  <table id="farmerTable">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Farmer Name</th>
-        <th>Crop Type</th>
-        <th>Process Step</th>
-        <th>Coordinates</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <h2>Farmers Pending Verification</h2>
 
-  <form id="verifyForm">
-    <h3>🧪 Lab Verification Form</h3>
-    <input type="hidden" id="farmerId" />
+  <div class="container mt-4">
+    <table class="table table-bordered text-center align-middle">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User ID</th>
+          <th>Farmer Name</th>
+          <th>Crop Type</th>
+          <th>Land Details</th>
+          <th>Process Step</th>
+          <th>Seed Bill</th>
+          <th>Weekly Photo</th>
+          <th>Coordinates</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="farmerTableBody">
+        <tr><td colspan="11">Loading data...</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-    <label>Lab ID</label>
-    <input type="text" id="lab_id" placeholder="Enter Lab ID" required>
+  <!-- ✅ Modal for Verification Form -->
+  <div class="modal fade" id="verifyModal" tabindex="-1" aria-labelledby="verifyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form id="verifyForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="verifyModalLabel">Verify Farmer Request</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
 
-    <label>Lab Name</label>
-    <input type="text" id="lab_name" placeholder="Enter Lab Name" required>
+          <div class="modal-body">
+            <input type="hidden" id="farmerId" />
 
-    <label>Verification Status</label>
-    <select id="verification_status">
-      <option value="Approved">Approved</option>
-      <option value="Rejected">Rejected</option>
-    </select>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Farmer User ID</label>
+                <input type="text" id="farmerUserId" class="form-control" readonly />
+              </div>
 
-    <label>Remarks</label>
-    <textarea id="remarks" placeholder="Enter remarks"></textarea>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Lab Reporter Name</label>
+                <input type="text" id="labName" class="form-control" required />
+              </div>
 
-    <label>Location</label>
-    <button type="button" id="getLocationBtn">📍 Get Current Location</button>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Lab ID</label>
+                <input type="text" id="labId" class="form-control" required />
+              </div>
 
-    <label>Address</label>
-    <input type="text" id="lab_location" placeholder="Detected Address">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Verification Status</label>
+                <select id="verificationStatus" class="form-select" required>
+                  <option value="">Select</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+            </div>
 
-    <div id="map"></div>
+            <div class="mb-3">
+              <button type="button" class="btn btn-success btn-sm" id="getLocationBtn">📍 Get Current Location</button>
+              <div id="map"></div>
+            </div>
 
-    <input type="hidden" id="latitude">
-    <input type="hidden" id="longitude">
+            <div class="mb-3">
+              <label class="form-label">Detected Address</label>
+              <input type="text" id="address" class="form-control" readonly />
+            </div>
 
-    <button type="submit">Submit Verification</button>
-  </form>
+            <input type="hidden" id="latitude" />
+            <input type="hidden" id="longitude" />
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Submit Report</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    let selectedFarmerId = null;
+    const tableBody = document.getElementById("farmerTableBody");
+    const verifyModal = new bootstrap.Modal(document.getElementById("verifyModal"));
+    const verifyForm = document.getElementById("verifyForm");
     let map, marker;
 
+    // ✅ Load farmer data
     async function loadFarmerRequests() {
       const res = await fetch("http://localhost:4000/farmer/pending");
-      const farmers = await res.json();
-      const tbody = document.querySelector("#farmerTable tbody");
-      tbody.innerHTML = "";
-      farmers.forEach(f => {
+      const data = await res.json();
+      tableBody.innerHTML = "";
+
+      if (!data.length) {
+        tableBody.innerHTML = "<tr><td colspan='11'>No pending requests.</td></tr>";
+        return;
+      }
+
+      data.forEach((farmer) => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${f.id}</td>
-          <td>${f.farmer_name}</td>
-          <td>${f.crop_type}</td>
-          <td>${f.process_step}</td>
-          <td>${f.coordinates || "—"}</td>
-          <td>${f.status}</td>
-          <td><button onclick="openVerifyForm(${f.id})">Verify</button></td>
+          <td>${farmer.id}</td>
+          <td>${farmer.userid}</td>
+          <td>${farmer.farmer_name}</td>
+          <td>${farmer.crop_type}</td>
+          <td>${farmer.land_details}</td>
+          <td>${farmer.process_step}</td>
+          <td>${farmer.seed_bill_path ? `<a href="/uploads/${farmer.seed_bill_path}" target="_blank">View</a>` : "—"}</td>
+          <td>${farmer.weekly_photo_path ? `<a href="/uploads/${farmer.weekly_photo_path}" target="_blank">View</a>` : "—"}</td>
+          <td>${farmer.coordinates ? farmer.coordinates : "—"}</td>
+          <td>${farmer.status}</td>
+          <td><button class="verify-btn" onclick="openVerifyModal(${farmer.id}, '${farmer.userid}')">Verify</button></td>
         `;
-        tbody.appendChild(row);
+        tableBody.appendChild(row);
       });
     }
 
-    function openVerifyForm(id) {
-      selectedFarmerId = id;
-      document.getElementById("verifyForm").style.display = "block";
+    // ✅ Open modal
+    window.openVerifyModal = function (id, farmerUserId) {
       document.getElementById("farmerId").value = id;
+      document.getElementById("farmerUserId").value = farmerUserId;
+      document.getElementById("address").value = "";
+      document.getElementById("latitude").value = "";
+      document.getElementById("longitude").value = "";
 
+      setTimeout(initMap, 300);
+      verifyModal.show();
+    };
+
+    // ✅ Initialize Leaflet Map
+    function initMap() {
       if (!map) {
-        map = L.map("map").setView([10.7905, 78.7047], 7); // default India center
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: "© OpenStreetMap contributors"
+        map = L.map('map').setView([20.5937, 78.9629], 5); // Default India view
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
         }).addTo(map);
       }
+      if (marker) map.removeLayer(marker);
     }
 
-    document.getElementById("getLocationBtn").addEventListener("click", () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-          const lat = pos.coords.latitude;
-          const lon = pos.coords.longitude;
-          document.getElementById("latitude").value = lat;
-          document.getElementById("longitude").value = lon;
+    // ✅ Detect Current Location
+// Detect current location
+document.getElementById("getLocationBtn").addEventListener("click", () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      document.getElementById("latitude").value = lat;
+      document.getElementById("longitude").value = lon;
 
-          if (marker) map.removeLayer(marker);
-          marker = L.marker([lat, lon]).addTo(map);
-          map.setView([lat, lon], 15);
+      if (marker) map.removeLayer(marker);
+      marker = L.marker([lat, lon]).addTo(map);
+      map.setView([lat, lon], 15);
 
-          // Get detailed address
-          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`);
-          const data = await res.json();
-          if (data && data.address) {
-            const addr = data.address;
-            const fullAddr = [addr.road, addr.city, addr.state, addr.country, addr.postcode].filter(Boolean).join(", ");
-            document.getElementById("lab_location").value = fullAddr;
-          }
-        });
-      } else alert("Geolocation not supported");
+      // ✅ Reverse Geocode (more accurate)
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`);
+      const locData = await res.json();
+
+      if (locData && locData.address) {
+        const addr = locData.address;
+        const formatted = [
+          addr.road,
+          addr.suburb,
+          addr.city || addr.town || addr.village,
+          addr.state,
+          addr.country,
+          addr.postcode
+        ].filter(Boolean).join(", ");
+        document.getElementById("address").value = formatted || locData.display_name || "Address not found";
+      } else {
+        document.getElementById("address").value = "Address not found";
+      }
     });
+  } else {
+    alert("Geolocation is not supported by your browser.");
+  }
+});
 
-    document.getElementById("verifyForm").addEventListener("submit", async (e) => {
+
+    // ✅ Submit Verification Form
+    verifyForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const payload = {
-        lab_userid: 1, // Replace with actual logged-in user ID
-        lab_id: document.getElementById("lab_id").value,
-        lab_name: document.getElementById("lab_name").value,
-        verification_status: document.getElementById("verification_status").value,
-        remarks: document.getElementById("remarks").value,
-        lab_location: document.getElementById("lab_location").value,
-        latitude: document.getElementById("latitude").value,
-        longitude: document.getElementById("longitude").value
-      };
+      const id = document.getElementById("farmerId").value;
+      const farmer_userid = document.getElementById("farmerUserId").value;
+      const lab_name = document.getElementById("labName").value;
+      const lab_id = document.getElementById("labId").value;
+      const latitude = document.getElementById("latitude").value;
+      const longitude = document.getElementById("longitude").value;
+      const verification_status = document.getElementById("verificationStatus").value;
 
-      const res = await fetch(`http://localhost:4000/lab/verify/${selectedFarmerId}`, {
+      const res = await fetch(`http://localhost:4000/farmer/verify/${id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ farmer_userid, lab_name, lab_id, latitude, longitude, verification_status })
       });
 
       const data = await res.json();
-      alert(data.message);
-      document.getElementById("verifyForm").reset();
-      document.getElementById("verifyForm").style.display = "none";
-      loadFarmerRequests();
+      alert(data.message || "Verification completed!");
+      verifyModal.hide();
+   // 🔁 Reload pending table
+     loadFarmerRequests();
+
+  // 🧹 Close modal
+  const modal = bootstrap.Modal.getInstance(document.getElementById("verifyModal"));
+  modal.hide();
     });
 
     loadFarmerRequests();

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AyurTrace | Home</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Swiper JS for slider -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+  <div class="header-container">
+    <div class="logo">
+      <img src="images/logo.jpg" alt="AyurTrace Logo">
+      <h1>AyurTrace</h1>
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/contactus">Contact</a>
+    </nav>
+  </div>
+</header>
+
+
+  <!-- Slider / Hero Section -->
+  <section class="hero-slider" data-aos="fade-up">
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="images/slide1.jpg" alt="Slide 1"></div>
+        <div class="swiper-slide"><img src="images/slide2.jpg" alt="Slide 2"></div>
+        <div class="swiper-slide"><img src="images/slide3.jpg" alt="Slide 3"></div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main>
+    <h2 data-aos="fade-down">Choose Your Role</h2>
+    <div class="role-cards">
+      <a href="http://localhost:4000/auth" class="card" data-aos="zoom-in">
+        <div class="overlay"></div>
+        <img src="images/farmer.jpg" alt="Farmer">
+        <div class="card-text">Farmer / Grower</div>
+      </a>
+      <a href="http://localhost:4000/labauth" class="card" data-aos="zoom-in" data-aos-delay="100">
+        <div class="overlay"></div>
+        <img src="images/processor.jpg" alt="Processor">
+        <div class="card-text">Analyticore</div>
+      </a>
+      <a href="http://localhost:4000/authmanu" class="card" data-aos="zoom-in" data-aos-delay="200">
+        <div class="overlay"></div>
+        <img src="images/manufacturer.jpg" alt="Manufacturer">
+        <div class="card-text">Manufacturer</div>
+      </a>
+      
+    </div>
+  </main>
+
+  <footer data-aos="fade-up">
+    © 2025 AyurTrace | Blockchain-Powered Herbal Transparency
+  </footer>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper('.mySwiper', {
+      loop: true,
+      autoplay: { delay: 2000, disableOnInteraction: false },
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+      pagination: { el: '.swiper-pagination', clickable: true },
+      effect: 'fade',
+    });
+  </script>
+
+  <!-- AOS JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script>
+</body>
+</html>

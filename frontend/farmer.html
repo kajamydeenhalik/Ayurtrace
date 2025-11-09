@@ -47,6 +47,8 @@
 
     <!-- Sign Up Form -->
     <form id="signupForm" class="form-card" data-aos="fade-up">
+      <label>Farmer Name:</label>
+      <input type="text" id="signupName" placeholder="Enter your name">
       <label>Email</label>
       <input type="email" id="signupEmail" placeholder="Enter your email" required />
 
@@ -102,14 +104,15 @@ const BASE_URL = "http://localhost:4000";
 // 📝 Farmer Signup
 signupForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-
+  const name  = document.getElementById('signupName').value;
+  console.log(name);
   const email = document.getElementById('signupEmail').value;
   const password = document.getElementById('signupPassword').value;
 
   const res = await fetch(`${BASE_URL}/auth/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({email, password, role: "farmer" })
+    body: JSON.stringify({name,email, password, role: "farmer" })
   });
 
   const data = await res.json();
@@ -134,6 +137,7 @@ loginForm.addEventListener('submit', async (e) => {
   if (res.ok) {
     // Save token for future authenticated requests
     localStorage.setItem('farmerToken', data.token);
+    localStorage.setItem("farmerEmail", data.email);
     alert("Login successful!");
     // redirect to dashboard
     window.location.href = "http://localhost:4000/farmer-dashboard.html";

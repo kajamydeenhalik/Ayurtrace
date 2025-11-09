@@ -7,8 +7,12 @@ const path = require("path");
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key";
 
+router.get('/labauth',(req,res)=>{
+   res.sendFile(path.join(__dirname,'..', 'frontend','lab.html'));
+})
+
 // ✅ Analyticore Signup
-router.post("/signup", async (req, res) => {
+router.post("/labauth/signup", async (req, res) => {
   const { email, password } = req.body;
   const role = "analyticore";
 
@@ -28,7 +32,7 @@ router.post("/signup", async (req, res) => {
 });
 
 // ✅ Analyticore Login
-router.post("/login", async (req, res) => {
+router.post("/labauth/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const [rows] = await db.query("SELECT * FROM users WHERE email=? AND role='analyticore'", [email]);

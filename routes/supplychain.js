@@ -43,18 +43,27 @@ router.post("/farmer-dashboard", upload.fields([
       cropType,
       processStep,
       coordinates,
-      userid
+      userid,
+      email,
     } = req.body;
 // userid, id, farmer_name, harvest_date, crop_type, land_details, process_step, coordinates, seed_bill_path, weekly_photo_path, status, created_at
-    const seedBillPath = req.files["seedBill"] ? req.files["seedBill"][0].filename : null;
-    const weeklyPhotoPath = req.files["weeklyPhoto"] ? req.files["weeklyPhoto"][0].filename : null;
+  // Save paths relative to the /uploads directory for web access
+const seedBillPath = req.files["seedBill"]
+  ? `uploads/${req.files["seedBill"][0].filename}`
+  : null;
+
+const weeklyPhotoPath = req.files["weeklyPhoto"]
+  ? `uploads/${req.files["weeklyPhoto"][0].filename}`
+  : null;
+
 
     // Insert farmer data into database
     const [result] = await db.query(
-      `INSERT INTO farmer_data (userid,farmer_name,harvest_date, crop_type, land_details,  process_step,coordinates, seed_bill_path, weekly_photo_path,status)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
+      `INSERT INTO farmer_data (userid,email,farmer_name,harvest_date, crop_type, land_details,  process_step,coordinates, seed_bill_path, weekly_photo_path,status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)`,
       [
          userid,   
+         email,
         "Farmer Default",          // placeholder if not in form         
         new Date(), 
         cropType,               

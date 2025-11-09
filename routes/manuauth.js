@@ -7,6 +7,10 @@ const path = require("path");
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key";
 
+router.get('/authmanu',(req,res)=>{
+   res.sendFile(path.join(__dirname,'..', 'frontend','manufacturer.html'));
+})
+
 // ✅ Manufacturer Signup
 router.post("/signup", async (req, res) => {
   const { email, password } = req.body;

@@ -50,9 +50,10 @@
         <h1>AyurTrace</h1>
       </div>
       <nav>
+        <a href="http://localhost:4000/farmer-herb-status.html">Herb Status</a>
         <a href="/">Home</a>
         <a href="#" class="active">Farmer Dashboard</a>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+       <a href="/"><button class="logout-btn" >Logout</button></a>
       </nav>
     </div>
   </header>
@@ -241,18 +242,18 @@
     }
 
     // ================ FORM SUBMISSION =================
-   document.getElementById("farmerActivityForm").addEventListener("submit", async function (e) {
-  e.preventDefault(); // Stop the page from reloading
+ document.getElementById("farmerActivityForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
 
-  // Collect all form data
   const formData = new FormData();
-   formData.append("userid", document.getElementById("userid").value);
+  formData.append("userid", document.getElementById("userid").value);
   formData.append("seedBill", document.getElementById("seedBill").files[0]);
   formData.append("landDetails", document.getElementById("landDetails").value);
   formData.append("cropType", document.getElementById("cropType").value);
   formData.append("processStep", document.getElementById("processStep").value);
   formData.append("coordinates", document.getElementById("coordinates").innerText);
   formData.append("weeklyPhoto", document.getElementById("weeklyPhoto").files[0]);
+  formData.append("email", localStorage.getItem("farmerEmail")); // ✅ include email
 
   try {
     const response = await fetch("http://localhost:4000/api/farmer-dashboard", {
@@ -264,8 +265,8 @@
 
     if (response.ok) {
       alert("✅ Farmer activity submitted successfully!");
-      console.log("Server Response:", data);
       document.getElementById("updateList").innerHTML += `<li>${data.message}</li>`;
+      window.location.href = "http://localhost:4000/farmer-herb-status.html";
     } else {
       alert("❌ Error: " + data.error);
     }
@@ -275,7 +276,6 @@
   }
 });
 
-    function logout(){ alert('You have been logged out.'); window.location.href='/'; }
   </script>
 </body>
 </html>

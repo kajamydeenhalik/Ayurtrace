@@ -157,7 +157,7 @@
         return;
       }
 
-  const res = await fetch("http://localhost:4000/authlab/signup", {
+  const res = await fetch("http://localhost:4000/labauth/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })
@@ -174,7 +174,7 @@ loginForm.addEventListener('submit', async (e) => {
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
-  const res = await fetch("http://localhost:4000/authlab/login", {
+  const res = await fetch("http://localhost:4000/labauth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password, role: "analyticore" })
